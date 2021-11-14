@@ -1,5 +1,6 @@
 import {Readable} from 'stream';
 import {close, open, read} from 'fs';
+import {ReadFileError} from "../errors/read-file-error.js";
 
 export class ReadFile extends Readable {
     constructor(filename) {
@@ -11,7 +12,7 @@ export class ReadFile extends Readable {
     _construct(callback) {
         open(this.filename, 'r', (err, fd) => {
             if (err) {
-                callback(err);
+                throw ReadFileError(`File ${this.filename} could not be opened to read: ${err}`);
             } else {
                 this.fd = fd;
                 callback();

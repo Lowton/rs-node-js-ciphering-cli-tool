@@ -2,6 +2,7 @@ import {cipherToCryptoTransform} from "./crypto/crypto-provider.js";
 import {ReadFile} from "./streams/read-file.js";
 import {WriteFile} from "./streams/write-file.js";
 import {WriteTerminal} from "./streams/write-terminal.js";
+import {ConfigError} from "./errors/config-error.js";
 
 export class ArgsParser {
     constructor(args) {
@@ -39,9 +40,8 @@ export class ArgsParser {
 
     getCryptoTransformQueue(config) {
         const matches = this.configRegExp.test(config);
-        console.log("matches", matches);
         if(!matches) {
-            throw Error(`Неверная конфигурация шифрования: ${config}`);
+            throw ConfigError(`Неверная конфигурация шифрования: ${config}`);
         }
         const ciphers = config.split("-");
         return ciphers.map(cipherToCryptoTransform);

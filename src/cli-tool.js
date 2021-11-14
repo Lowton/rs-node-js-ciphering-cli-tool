@@ -1,14 +1,23 @@
 import {ArgsParser} from "./args-parser.js";
 import {pipeline} from "stream";
 
+function handleError(description, code) {
+    process.stdout.write(description);
+    process.exit(code)
+}
+
 function main() {
     const properties = new ArgsParser(process.argv.slice(2)).parse();
     pipeline(properties.input,
         ...properties.config,
         properties.output,
         err => {
-            console.error(err);
-            console.log("всё пошло по пизде");
+            switch (err?.type) {
+                case "ConfigError": handleError(err.description, 1001); break;
+                case "WriteFileError": handleError(err.description, 1002); break;
+                case "ReadFileError": handleError(err.description, 1003); break;
+                default: handleError("Something went wrong!", 1);
+            }
         }
     );
 }

@@ -1,5 +1,6 @@
 import {Writable} from 'stream';
 import {close, open, write} from 'fs';
+import {WriteFileError} from "../errors/write-file-error.js";
 
 export class WriteFile extends Writable {
     constructor(filename) {
@@ -8,10 +9,9 @@ export class WriteFile extends Writable {
     }
 
     _construct(callback) {
-        console.log("writeble construct")
         open(this.filename, 'a', (err, fd) => {
             if (err) {
-                callback(err);
+                throw WriteFileError(`File ${this.filename} could not be opened to write: ${err}`);
             } else {
                 this.fd = fd;
                 callback();
