@@ -1,4 +1,3 @@
-
 import {CryptoTransform} from "./crypto-transform.js";
 import {Caesar} from "./ciphers/caesar.js";
 import {Atbash} from "./ciphers/atbash.js";
