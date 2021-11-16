@@ -12,7 +12,7 @@ export class ReadFile extends Readable {
     _construct(callback) {
         open(this.filename, 'r', (err, fd) => {
             if (err) {
-                throw ReadFileError(`File ${this.filename} could not be opened to read: ${err}`);
+                throw new ReadFileError(`File ${this.filename} could not be opened to read: ${err}`);
             } else {
                 this.fd = fd;
                 callback();

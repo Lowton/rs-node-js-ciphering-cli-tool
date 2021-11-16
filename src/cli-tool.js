@@ -2,7 +2,7 @@ import {ArgsParser} from "./args-parser.js";
 import {pipeline} from "stream";
 
 function handleError(description, code) {
-    process.stdout.write(description);
+    process.stderr.write(description);
     process.exit(code)
 }
 
@@ -16,7 +16,7 @@ function main() {
                 case "ConfigError": handleError(err.description, 1001); break;
                 case "WriteFileError": handleError(err.description, 1002); break;
                 case "ReadFileError": handleError(err.description, 1003); break;
-                default: handleError("Something went wrong!", 1);
+                case "ArgumentError": handleError(err.description, 1004); break;
             }
         }
     );

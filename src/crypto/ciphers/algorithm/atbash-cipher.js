@@ -1,5 +1,10 @@
 export class AtbashCipher {
+    constructor() {
+        this.alphabetSize = 26;
+        this.letterMaxIndex = 25;
+    }
+
     shift(letter, code) {
-        return String.fromCharCode(((25 - (letter.charCodeAt() - code)) % 26) + code);
+        return String.fromCharCode(((this.letterMaxIndex - (letter.charCodeAt() - code)) % this.alphabetSize) + code);
     }
 }

@@ -1,5 +1,5 @@
 import {Writable} from 'stream';
-import {close, open, write} from 'fs';
+import {close, open, stat, write} from 'fs';
 import {WriteFileError} from "../errors/write-file-error.js";
 
 export class WriteFile extends Writable {
@@ -9,18 +9,24 @@ export class WriteFile extends Writable {
     }
 
     _construct(callback) {
-        open(this.filename, 'a', (err, fd) => {
-            if (err) {
-                throw WriteFileError(`File ${this.filename} could not be opened to write: ${err}`);
-            } else {
-                this.fd = fd;
-                callback();
+        stat(this.filename, (err) => {
+            if (err === null) {
+                open(this.filename, 'a', (error, fd) => {
+                    if (error) {
+                        throw new WriteFileError(`File ${this.filename} could not be opened to write: ${error}`);
+                    } else {
+                        this.fd = fd;
+                        callback();
+                    }
+                });
+            } else if (err.code === 'ENOENT') {
+                throw new WriteFileError(`File ${this.filename} does not exist: ${err}`);
             }
-        });
+        })
     }
 
     _write(chunk, encoding, callback) {
-        write(this.fd, chunk, callback);
+        write(this.fd, chunk.toString().trim() + "\n", callback);
     }
 
     _destroy(err, callback) {
