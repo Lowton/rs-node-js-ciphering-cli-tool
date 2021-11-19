@@ -1,18 +1,18 @@
-import {Readable} from 'stream';
-import {close, open, read} from 'fs';
+import {Readable} from "node:stream";
+import {close, open, read} from "node:fs";
 import {ReadFileError} from "../errors/read-file-error.js";
 
 export class ReadFile extends Readable {
     constructor(filename) {
         super();
         this.filename = filename;
-        this.fd = null;
+        this.fd = undefined;
     }
 
     _construct(callback) {
-        open(this.filename, 'r', (err, fd) => {
-            if (err) {
-                throw new ReadFileError(`File ${this.filename} could not be opened to read: ${err}`);
+        open(this.filename, "r", (error, fd) => {
+            if (error) {
+                throw new ReadFileError(`File ${this.filename} could not be opened to read: ${error}`);
             } else {
                 this.fd = fd;
                 callback();
@@ -22,20 +22,20 @@ export class ReadFile extends Readable {
 
     _read(size) {
         const buf = Buffer.alloc(size);
-        read(this.fd, buf, 0, size, null, (err, bytesRead) => {
-            if (err) {
-                this.destroy(err);
+        read(this.fd, buf, 0, size, undefined, (error, bytesRead) => {
+            if (error) {
+                this.destroy(error);
             } else {
-                this.push(bytesRead > 0 ? buf.slice(0, bytesRead) : null);
+                this.push(bytesRead > 0 ? buf.slice(0, bytesRead) : undefined);
             }
         });
     }
 
-    _destroy(err, callback) {
+    _destroy(error, callback) {
         if (this.fd) {
-            close(this.fd, (er) => callback(er || err));
+            close(this.fd, (er) => callback(er || error));
         } else {
-            callback(err);
+            callback(error);
         }
     }
 }

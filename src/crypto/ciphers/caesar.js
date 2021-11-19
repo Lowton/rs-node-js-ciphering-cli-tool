@@ -3,7 +3,7 @@ import {ShiftCipher} from "./algorithm/shift-cipher.js";
 
 export class Caesar {
     encoder() {
-        return new Cryptographer(new ShiftCipher(1))
+        return new Cryptographer(new ShiftCipher(1));
     }
 
     decoder() {

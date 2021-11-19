@@ -3,7 +3,7 @@ import {ShiftCipher} from "./algorithm/shift-cipher.js";
 
 export class Rot8 {
     encoder() {
-        return new Cryptographer(new ShiftCipher(8))
+        return new Cryptographer(new ShiftCipher(8));
     }
 
     decoder() {
