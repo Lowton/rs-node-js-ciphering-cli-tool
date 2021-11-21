@@ -5,8 +5,9 @@
   "type": "module",
   "main": "cli-tool.js",
   "scripts": {
-    "start": "node ./src/cli-tool.js",
+    "start": "node ./cli-tool.js",
     "test": "jest",
+    "coverage": "jest --coverage",
     "lint": "eslint --fix"
   },
   "engines": {
