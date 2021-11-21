@@ -11,4 +11,4 @@ export const cipherToCryptoTransform = (cipher) => {
         case "R0": return new CryptoTransform(new Rot8().decoder());
         case "R1": return new CryptoTransform(new Rot8().encoder());
     }
-}
+};
