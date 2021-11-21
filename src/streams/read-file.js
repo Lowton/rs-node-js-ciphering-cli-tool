@@ -1,5 +1,5 @@
 import {Readable} from "node:stream";
-import {close, open, read} from "node:fs";
+import {open, read} from "node:fs";
 import {ReadFileError} from "../errors/read-file-error.js";
 
 export class ReadFile extends Readable {
@@ -29,13 +29,5 @@ export class ReadFile extends Readable {
                 this.push(bytesRead > 0 ? buf.slice(0, bytesRead) : undefined);
             }
         });
-    }
-
-    _destroy(error, callback) {
-        if (this.fd) {
-            close(this.fd, (er) => callback(er || error));
-        } else {
-            callback(error);
-        }
     }
 }

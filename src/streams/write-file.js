@@ -1,5 +1,5 @@
 import {Writable} from "node:stream";
-import {close, open, stat, write} from "node:fs";
+import {open, stat, write} from "node:fs";
 import {WriteFileError} from "../errors/write-file-error.js";
 
 export class WriteFile extends Writable {
@@ -27,13 +27,5 @@ export class WriteFile extends Writable {
 
     _write(chunk, encoding, callback) {
         write(this.fd, chunk.toString().trim() + "\n", callback);
-    }
-
-    _destroy(error, callback) {
-        if (this.fd) {
-            close(this.fd, (er) => callback(er || error));
-        } else {
-            callback(error);
-        }
     }
 }
