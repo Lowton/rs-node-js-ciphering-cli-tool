@@ -1,0 +1,26 @@
+{
+  "name": "ciphering-cli-tool",
+  "version": "1.0.0",
+  "description": "School project",
+  "type": "module",
+  "main": "cli-tool.js",
+  "scripts": {
+    "start": "node ./src/cli-tool.js -c A-A",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lowton/rs-node-js-ciphering-cli-tool.git"
+  },
+  "keywords": [],
+  "author": "Lowton",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Lowton/rs-node-js-ciphering-cli-tool/issues"
+  },
+  "homepage": "https://github.com/Lowton/rs-node-js-ciphering-cli-tool#readme",
+  "devDependencies": {
+    "eslint": "^8.1.0"
+  }
+}
